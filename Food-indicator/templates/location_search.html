@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"><title>Regional Search | Food Indicator</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body { background: #f4f7f6; height: 100vh; display: flex; flex-direction: column; }
+        .hero { background: #1a535c; color: white; padding: 15px; }
+        .search-card { max-width: 600px; margin: 50px auto; border-radius: 20px; }
+    </style>
+</head>
+<body>
+    <div class="hero d-flex justify-content-between">
+        <h4 class="m-0">📍 Regional Risk Lookup</h4>
+        <a href="/" class="btn btn-sm btn-outline-light">Back to Dashboard</a>
+    </div>
+
+    <div class="container">
+        <div class="card search-card p-5 shadow-sm border-0">
+            <h3 class="fw-bold text-center mb-4">Select a Location</h3>
+            <form method="POST">
+                <select name="location" class="form-select form-select-lg mb-4" required>
+                    <option value="" disabled selected>Choose a Province/Zone...</option>
+                    <option value="North Zone">North Zone</option>
+                    <option value="South Zone">South Zone</option>
+                    <option value="Western Highlands">Western Highlands</option>
+                </select>
+                <button class="btn btn-primary w-100 btn-lg shadow">Fetch Risk Status</button>
+            </form>
+
+            {% if prediction %}
+            <div class="mt-5 p-4 border-start border-4 {% if 'High' in prediction.result %}border-danger bg-danger-subtle{% else %}border-success bg-success-subtle{% endif %} rounded">
+                <h4 class="fw-bold">{{ prediction.location }}</h4>
+                <p class="mb-1">Current Status: <strong>{{ prediction.result }}</strong></p>
+                <p class="small text-muted">Last Rainfall: {{ prediction.rainfall }}mm | Price Index: {{ prediction.price }}</p>
+                <hr>
+                <p class="small"><em>Report generated on: {{ prediction.date }}</em></p>
+            </div>
+            {% endif %}
+        </div>
+    </div>
+</body>
+</html>
